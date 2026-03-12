@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
 
 const pageSchema = {
   '@type': 'ContactPage',
@@ -92,7 +93,7 @@ const pageSchema = {
 
             <p style="font-size: 0.8125rem; color: var(--color-subtle); line-height: 1.55;">
               С изпращането се съгласявате с нашата
-              <a href="/politika-za-poveritelnost" style="color: var(--color-accent); text-decoration: underline;">Политика за поверителност</a>.
+              <a href={`${base}politika-za-poveritelnost`} style="color: var(--color-accent); text-decoration: underline;">Политика за поверителност</a>.
             </p>
 
             <button type="submit" class="btn-primary" style="align-self: start; min-width: 10rem;">

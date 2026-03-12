@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CTABlock from '../components/CTABlock.astro';
+const base = import.meta.env.BASE_URL;
 
 const pageSchema = {
   '@type': 'AboutPage',
@@ -103,8 +104,8 @@ const values = [
           <p style="font-size: 0.9375rem; color: var(--color-muted);">Свържете се с нас или заявете демо с ваша реална документация.</p>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.875rem;">
-          <a href="/kontakt" class="btn-primary">Свържи се с нас</a>
-          <a href="/resheniya" class="btn-ghost">Разгледай решенията</a>
+          <a href={`${base}kontakt`} class="btn-primary">Свържи се с нас</a>
+          <a href={`${base}resheniya`} class="btn-ghost">Разгледай решенията</a>
         </div>
       </div>
     </div>

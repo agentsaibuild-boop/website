@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
+const base = import.meta.env.BASE_URL;
 
 const pageSchema = {
   '@type': 'SoftwareApplication',
@@ -88,8 +89,8 @@ const integrations = [
     eyebrow="Решения"
     headline="Платформата зад AI инструментите за строителния бизнес"
     subheadline="AIBUILD AGENTS е платформа-основа с четири ключови модула. Върху тях изграждаме нарастваща екосистема от специализирани приложения за различните нужди на строителните дружества."
-    ctaPrimary={{ href: '/kontakt', label: 'Заявка за демо' }}
-    ctaSecondary={{ href: '/prilozheniya', label: 'Вижте приложенията' }}
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Заявка за демо' }}
+    ctaSecondary={{ href: `${base}prilozheniya`, label: 'Вижте приложенията' }}
   />
 
   <!-- Modules -->
@@ -149,7 +150,7 @@ const integrations = [
             Върху четирите основни модула изграждаме специализирани приложения за конкретни нужди в строителния процес. Всяко ново приложение се интегрира в същата среда — без допълнителен онбординг за екипа.
           </p>
           <div style="margin-top: 1.5rem;">
-            <a href="/prilozheniya" class="btn-ghost">Разгледай приложенията →</a>
+            <a href={`${base}prilozheniya`} class="btn-ghost">Разгледай приложенията →</a>
           </div>
         </div>
         <ul style="display: flex; flex-direction: column; gap: 0.75rem; list-style: none;">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
@@ -44,7 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
 
         <!-- Primary CTA -->
-        <a href="/" class="btn-primary" style="margin-bottom: 3rem; display: inline-flex;">
+        <a href={base} class="btn-primary" style="margin-bottom: 3rem; display: inline-flex;">
           ← Върни се към началната страница
         </a>
 
@@ -53,10 +54,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="label-mono" style="margin-bottom: 1rem;">Може би търсите:</p>
           <ul style="display: flex; flex-direction: column; gap: 0.5rem; list-style: none;">
             {[
-              { href: '/resheniya',    label: 'Платформата и решенията' },
-              { href: '/prilozheniya', label: 'Приложения и use cases' },
-              { href: '/za-nas',       label: 'За нас' },
-              { href: '/kontakt',      label: 'Контакт и демо' },
+              { href: `${base}resheniya`,    label: 'Платформата и решенията' },
+              { href: `${base}prilozheniya`, label: 'Приложения и use cases' },
+              { href: `${base}za-nas`,       label: 'За нас' },
+              { href: `${base}kontakt`,      label: 'Контакт и демо' },
             ].map(l => (
               <li>
                 <a href={l.href} style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.9375rem;font-weight:500;color:var(--color-accent);" class="notfound-link">
