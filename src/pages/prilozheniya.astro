@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const pageSchema = {
   '@type': 'ItemList',
   '@id': 'https://example.com/prilozheniya#list',
@@ -104,8 +106,8 @@ const upcomingApps = [
     eyebrow="Приложения"
     headline="Едно приложение е началото, не краят"
     subheadline="Техническите предложения са първото налично приложение. Изграждаме цялостна екосистема от AI инструменти — всеки адресира конкретна нужда в строителния бизнес."
-    ctaPrimary={{ href: '/kontakt', label: 'Обсъди вашия случай' }}
-    ctaSecondary={{ href: '/resheniya', label: 'Разгледай платформата' }}
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Обсъди вашия случай' }}
+    ctaSecondary={{ href: `${base}resheniya`, label: 'Разгледай платформата' }}
   />
 
   <!-- Live apps -->
@@ -191,8 +193,8 @@ const upcomingApps = [
   <CTABlock
     headline="Имате конкретна нужда, която не виждате тук?"
     body="Разговаряме с клиенти за бъдещите приложения. Вашият случай може да определи следващото."
-    ctaPrimary={{ href: '/kontakt', label: 'Свържи се с нас' }}
-    ctaSecondary={{ href: '/resheniya', label: 'Разгледай платформата' }}
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Свържи се с нас' }}
+    ctaSecondary={{ href: `${base}resheniya`, label: 'Разгледай платформата' }}
   />
 </BaseLayout>
 

@@ -1,3 +1,4 @@
 ---
-return Astro.redirect('/kontakt', 301);
+const base = import.meta.env.BASE_URL;
+return Astro.redirect(`${base}kontakt`, 301);
 ---
