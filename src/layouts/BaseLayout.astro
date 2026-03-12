@@ -95,8 +95,8 @@ const schemaJson = JSON.stringify({ '@context': 'https://schema.org', '@graph': 
   <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.svg" sizes="any" />
+  <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} sizes="any" />
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={schemaJson} />

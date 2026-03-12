@@ -7,11 +7,13 @@ interface Props {
   dark?: boolean;
 }
 
+const base = import.meta.env.BASE_URL;
+
 const {
   headline = 'Готови ли сте да внедрите AI в строителния си бизнес?',
   body = 'Заявете безплатно демо и вижте как AIBUILD AGENTS може да автоматизира вашите процеси.',
-  ctaPrimary  = { href: '/kontakt',    label: 'Заявка за демо' },
-  ctaSecondary = { href: '/resheniya', label: 'Разгледай решенията' },
+  ctaPrimary  = { href: `${base}kontakt`,    label: 'Заявка за демо' },
+  ctaSecondary = { href: `${base}resheniya`, label: 'Разгледай решенията' },
   dark = false,
 } = Astro.props;
 
