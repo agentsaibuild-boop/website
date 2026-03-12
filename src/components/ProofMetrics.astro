@@ -17,6 +17,15 @@ const {
   metrics,
   note = '* Числата са примерни и отразяват типични резултати от пилотни внедрявания.',
 } = Astro.props;
+
+// Parse "до 80%" → { prefix:"до ", num:80, suffix:"%" }
+function parseMetric(value: string) {
+  const match = value.match(/^(.*?)(\d+(?:\.\d+)?)(.*?)$/);
+  if (!match) return { prefix: value, num: null, suffix: '' };
+  return { prefix: match[1], num: parseFloat(match[2]), suffix: match[3] };
+}
+
+const parsed = metrics.map(m => ({ ...m, ...parseMetric(m.value) }));
 ---
 
 <section
@@ -55,14 +64,14 @@ const {
       border-radius: 6px;
       overflow: hidden;
     " class="metrics-grid" role="list">
-      {metrics.map((m, i) => (
+      {parsed.map((m, i) => (
         <div
           role="listitem"
           data-reveal
           data-delay={String(i + 1)}
           style={`
             padding: 1.75rem 2rem;
-            border-bottom: ${i < metrics.length - 1 ? '1px solid #2A2A2A' : 'none'};
+            border-bottom: ${i < parsed.length - 1 ? '1px solid #2A2A2A' : 'none'};
           `}
           class="metric-item"
         >
@@ -74,7 +83,17 @@ const {
             color: var(--color-dark-text);
             margin-bottom: 0.5rem;
           " aria-label={`${m.value} – ${m.label}`}>
-            {m.value}<span style="color: var(--color-accent); font-size: 0.6em;">*</span>
+            {m.prefix && <span class="metric-prefix">{m.prefix}</span>}
+            {m.num !== null
+              ? <span
+                  class="metric-num"
+                  data-count={String(m.num)}
+                  data-suffix={m.suffix}
+                >0</span>
+              : <span>{m.value}</span>
+            }
+            {m.num !== null && <span class="metric-suffix">{m.suffix}</span>}
+            <span style="color: var(--color-accent); font-size: 0.6em;">*</span>
           </p>
           <p class="label-mono" style="color: var(--color-dark-muted);">{m.label}</p>
         </div>
@@ -91,6 +110,44 @@ const {
     </p>
   </div>
 </section>
+
+<script>
+  function animateCount(el: HTMLElement) {
+    const target = parseFloat(el.dataset.count ?? '0');
+    const isInteger = Number.isInteger(target);
+    const duration = 1600;
+    const start = performance.now();
+
+    function ease(t: number) {
+      return 1 - Math.pow(1 - t, 3); // ease-out cubic
+    }
+
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const current = target * ease(progress);
+      el.textContent = isInteger ? String(Math.round(current)) : current.toFixed(1);
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = isInteger ? String(target) : String(target);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const nums = entry.target.querySelectorAll<HTMLElement>('[data-count]');
+        nums.forEach(animateCount);
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  document.querySelectorAll<HTMLElement>('.metrics-grid').forEach(el => observer.observe(el));
+</script>
 
 <style>
   @media (min-width: 640px) {
