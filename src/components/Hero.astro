@@ -20,6 +20,40 @@ const {
 
 <section aria-label="Начална секция" class="hero-section">
 
+  <!-- Tech background decoration (all screen sizes) -->
+  <div class="hero-bg" aria-hidden="true">
+    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <!-- Rings centred on right side (where illustration lives on desktop) -->
+      <circle cx="640" cy="250" r="180" stroke="#1B398F" stroke-width="0.75" opacity="0.07"/>
+      <circle cx="640" cy="250" r="260" stroke="#1B398F" stroke-width="0.5"  opacity="0.04"/>
+      <circle cx="640" cy="250" r="340" stroke="#1B398F" stroke-width="0.5"  opacity="0.025"/>
+
+      <!-- Dashed connector lines -->
+      <line x1="200" y1="80"  x2="570" y2="190" stroke="#1B398F" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.13"/>
+      <line x1="640" y1="70"  x2="640" y2="250" stroke="#1B398F" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.10"/>
+      <line x1="760" y1="130" x2="640" y2="250" stroke="#1B398F" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.10"/>
+      <line x1="100" y1="340" x2="400" y2="260" stroke="#1B398F" stroke-width="0.5"  stroke-dasharray="2 5" opacity="0.08"/>
+
+      <!-- Node dots -->
+      <circle cx="200" cy="80"  r="3.5" fill="#1B398F" opacity="0.22"/>
+      <circle cx="640" cy="70"  r="3"   fill="#1B398F" opacity="0.18"/>
+      <circle cx="760" cy="130" r="3"   fill="#1B398F" opacity="0.16"/>
+      <circle cx="100" cy="340" r="2.5" fill="#1B398F" opacity="0.13"/>
+      <circle cx="400" cy="260" r="2"   fill="#1B398F" opacity="0.10"/>
+
+      <!-- Central glow dot -->
+      <circle cx="640" cy="250" r="5"   fill="#1B398F" opacity="0.18"/>
+      <circle cx="640" cy="250" r="2.5" fill="#5882E8" opacity="0.55"/>
+
+      <!-- Accent scatter dots -->
+      <circle cx="50"  cy="150" r="2"   fill="#1B398F" opacity="0.09"/>
+      <circle cx="720" cy="390" r="2"   fill="#1B398F" opacity="0.08"/>
+      <circle cx="30"  cy="420" r="1.5" fill="#1B398F" opacity="0.07"/>
+      <circle cx="780" cy="60"  r="1.5" fill="#1B398F" opacity="0.09"/>
+    </svg>
+  </div>
+
   <div class="container hero-grid">
 
     <!-- ───────── Left: text ───────── -->
@@ -251,6 +285,16 @@ const {
     overflow: hidden;
     padding-block: 5rem 4rem;
     border-bottom: 1px solid var(--color-border);
+    /* Dot-grid tech background */
+    background-image: radial-gradient(circle, rgba(27,57,143,0.065) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .hero-grid {
