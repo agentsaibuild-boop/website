@@ -112,41 +112,41 @@ const parsed = metrics.map(m => ({ ...m, ...parseMetric(m.value) }));
 </section>
 
 <script>
-  function animateCount(el: HTMLElement) {
-    const target = parseFloat(el.dataset.count ?? '0');
-    const isInteger = Number.isInteger(target);
-    const duration = 1600;
-    const start = performance.now();
+  function animateCount(el) {
+    const target = parseFloat(el.getAttribute('data-count') || '0');
+    const isInt = Number.isInteger(target);
+    const duration = 1800;
+    const startTime = performance.now();
 
-    function ease(t: number) {
-      return 1 - Math.pow(1 - t, 3); // ease-out cubic
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
     }
 
-    function tick(now: number) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const current = target * ease(progress);
-      el.textContent = isInteger ? String(Math.round(current)) : current.toFixed(1);
-      if (progress < 1) requestAnimationFrame(tick);
-      else el.textContent = isInteger ? String(target) : String(target);
+    el.textContent = '0';
+
+    function frame(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      const val = target * easeOut(t);
+      el.textContent = isInt ? String(Math.round(val)) : val.toFixed(1);
+      if (t < 1) requestAnimationFrame(frame);
     }
 
-    requestAnimationFrame(tick);
+    requestAnimationFrame(frame);
   }
 
-  const observer = new IntersectionObserver(
+  const metObs = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        const nums = entry.target.querySelectorAll<HTMLElement>('[data-count]');
-        nums.forEach(animateCount);
-        observer.unobserve(entry.target);
+        const span = entry.target.querySelector('[data-count]');
+        if (span) animateCount(span);
+        metObs.unobserve(entry.target);
       });
     },
-    { threshold: 0.3 }
+    { threshold: 0.2 }
   );
 
-  document.querySelectorAll<HTMLElement>('.metrics-grid').forEach(el => observer.observe(el));
+  document.querySelectorAll('.metric-item').forEach(el => metObs.observe(el));
 </script>
 
 <style>
