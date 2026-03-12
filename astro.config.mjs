@@ -3,7 +3,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://agentsaibuild-boop.github.io',
+  base: '/website',
   integrations: [
     sitemap({
       changefreq: 'weekly',
