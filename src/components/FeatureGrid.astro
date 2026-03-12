@@ -39,6 +39,8 @@ const { eyebrow, headline, subheadline, features } = Astro.props;
       {features.map((f, i) => (
         <article
           class="card"
+          data-reveal
+          data-delay={String(Math.min(i % 3 + 1, 6))}
           style="position: relative; overflow: hidden;"
           aria-labelledby={`feat-${i}`}
         >

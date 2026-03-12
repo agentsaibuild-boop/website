@@ -38,7 +38,10 @@ const { eyebrow, headline, steps } = Astro.props;
       <!-- Right: steps -->
       <ol style="display: flex; flex-direction: column; gap: 0; list-style: none;" role="list">
         {steps.map((step, i) => (
-          <li style="
+          <li
+            data-reveal
+            data-delay={String(i + 1)}
+            style="
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 0 1.5rem;

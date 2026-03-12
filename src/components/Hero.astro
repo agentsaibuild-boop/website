@@ -26,19 +26,19 @@ const {
     <div class="hero-text">
 
       {eyebrow && (
-        <p class="eyebrow" style="margin-bottom:1.25rem">{eyebrow}</p>
+        <p class="eyebrow hero-anim hero-d1" style="margin-bottom:1.25rem">{eyebrow}</p>
       )}
 
-      <h1 style="margin-bottom:1.5rem;color:var(--color-text)">{headline}</h1>
+      <h1 class="hero-anim hero-d2" style="margin-bottom:1.5rem;color:var(--color-text)">{headline}</h1>
 
-      <p class="hero-sub">{subheadline}</p>
+      <p class="hero-sub hero-anim hero-d3">{subheadline}</p>
 
-      <div class="hero-ctas">
+      <div class="hero-ctas hero-anim hero-d4">
         <a href={ctaPrimary.href}  class="btn-primary">{ctaPrimary.label}</a>
         <a href={ctaSecondary.href} class="btn-ghost">{ctaSecondary.label}</a>
       </div>
 
-      <div class="trust-line">
+      <div class="trust-line hero-anim hero-d5">
         <span class="trust-label">Разработено за:</span>
         {['Строителни дружества', 'Инженерни консултанти', 'Проектанти'].map(tag => (
           <span class="trust-tag">{tag}</span>
@@ -48,7 +48,7 @@ const {
     </div>
 
     <!-- ───────── Right: isometric illustration ───────── -->
-    <div class="hero-visual" aria-hidden="true">
+    <div class="hero-visual hero-anim hero-d6" aria-hidden="true">
       <!--
         Isometric grid: origin (240, 290)
         right vector (+ix): (+40, +20)

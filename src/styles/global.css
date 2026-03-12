@@ -1,6 +1,54 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────
+   Animations
+───────────────────────────────────────────── */
+
+/* Hero entrance (fires on load) */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.hero-anim { animation: heroIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-d1   { animation-delay: 0.05s; }
+.hero-d2   { animation-delay: 0.18s; }
+.hero-d3   { animation-delay: 0.32s; }
+.hero-d4   { animation-delay: 0.46s; }
+.hero-d5   { animation-delay: 0.58s; }
+.hero-d6   { animation-delay: 0.70s; }
+
+/* Scroll-reveal (JS adds .visible) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal].visible         { opacity: 1; transform: none; }
+[data-reveal][data-delay="1"] { transition-delay: 0.07s; }
+[data-reveal][data-delay="2"] { transition-delay: 0.14s; }
+[data-reveal][data-delay="3"] { transition-delay: 0.21s; }
+[data-reveal][data-delay="4"] { transition-delay: 0.28s; }
+[data-reveal][data-delay="5"] { transition-delay: 0.35s; }
+[data-reveal][data-delay="6"] { transition-delay: 0.42s; }
+
+/* FAQ answer slide-in */
+@keyframes ddOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Touch tap feedback */
+.card { transition: box-shadow 0.2s ease, transform 0.15s ease; }
+.card:active { transform: scale(0.985); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]   { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero-anim      { animation: none !important; }
+}
+
+/* ─────────────────────────────────────────────
    Design Tokens
 ───────────────────────────────────────────── */
 @theme {
