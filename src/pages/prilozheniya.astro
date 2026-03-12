@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABlock from '../components/CTABlock.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const pageSchema = {
+  '@type': 'ItemList',
+  '@id': 'https://example.com/prilozheniya#list',
+  name: 'Приложения на AIBUILD AGENTS',
+  description: 'Екосистема от AI приложения за строителния бизнес',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'Service',
+        name: 'Технически предложения',
+        provider: { '@id': 'https://example.com/#org' },
+        description: 'Автоматизирано генериране на технически предложения от проектна документация',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'Service',
+        name: 'Анализ на количествени сметки',
+        provider: { '@id': 'https://example.com/#org' },
+        description: 'AI анализ и структуриране на количествени сметки',
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'Service',
+        name: 'Управление на проектна документация',
+        provider: { '@id': 'https://example.com/#org' },
+        description: 'Централизирано управление на проектна документация с AI',
+      },
+    },
+  ],
+};
+
+// Current live apps
+const liveApps = [
+  {
+    id: '01',
+    tag: 'Технически предложения',
+    status: 'Налично',
+    title: 'От документация до предложение — без ръчна работа',
+    challenge:
+      'Подготовката на технически предложения за обществени поръчки изисква прочит на стотици страници документация, ръчно съпоставяне с изисквания и внимателно формулиране на отговори. Процесът е бавен, скъп и зависи от опита на конкретни специалисти.',
+    solution:
+      'Приложението автоматично извлича всички технически изисквания от документацията, структурира ги по раздели и генерира проект на техническо предложение с референции към изходните документи. Вашият екип преглежда, допълва и одобрява — вместо да започва от нулата.',
+    outcome: 'Намалено време за подготовка с до 80%. Повишена проследимост и намален риск от пропуснати изисквания.',
+    tags: ['Обществени поръчки', 'ЗОП', 'FIDIC', 'Строителство'],
+  },
+];
+
+// Upcoming apps
+const upcomingApps = [
+  {
+    id: '02',
+    tag: 'Анализ на КСС',
+    status: 'Скоро',
+    title: 'Структуриран анализ на количествени сметки',
+    body: 'Автоматично четене, валидиране и структуриране на количествени сметки. Сравнение между ревизии, засичане на несъответствия и извличане на обобщена информация за оферирането.',
+    tags: ['Количествени сметки', 'Оценка на разходи', 'Оферти'],
+  },
+  {
+    id: '03',
+    tag: 'Управление на документация',
+    status: 'Скоро',
+    title: 'Централизирана проектна документация с AI',
+    body: 'Единно хранилище за цялата проектна документация с AI-базирано търсене, автоматично версиониране и интелигентно свързване на свързани документи.',
+    tags: ['DMS', 'Версионност', 'Проектна документация'],
+  },
+  {
+    id: '04',
+    tag: 'Контрол на изпълнение',
+    status: 'В разработка',
+    title: 'AI мониторинг на строителното изпълнение',
+    body: 'Автоматично съпоставяне на реалното изпълнение с проектните параметри, засичане на отклонения и генериране на доклади за строителен надзор.',
+    tags: ['Строителен надзор', 'Изпълнение', 'Качество'],
+  },
+  {
+    id: '05',
+    tag: 'Анализ на договори',
+    status: 'В разработка',
+    title: 'Четене и анализ на строителни договори',
+    body: 'Автоматично извличане на ключови клаузи, задължения, срокове и условия от строителни договори. Засичане на рискови точки и несъответствия.',
+    tags: ['Договори', 'Risk management', 'Правни клаузи'],
+  },
+];
+---
+
+<BaseLayout
+  title="Приложения – AIBUILD AGENTS | AI инструменти за строителния бизнес"
+  description="Екосистема от AI приложения за строителния бизнес. Технически предложения (налично), анализ на КСС, управление на документация, контрол на изпълнение и още."
+  schema={pageSchema}
+>
+  <Hero
+    eyebrow="Приложения"
+    headline="Едно приложение е началото, не краят"
+    subheadline="Техническите предложения са първото налично приложение. Изграждаме цялостна екосистема от AI инструменти — всеки адресира конкретна нужда в строителния бизнес."
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Обсъди вашия случай' }}
+    ctaSecondary={{ href: `${base}resheniya`, label: 'Разгледай платформата' }}
+  />
+
+  <!-- Live apps -->
+  <section class="section" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="margin-bottom: 3rem;">
+        <p class="eyebrow" style="margin-bottom: 0.875rem; color: #2A6E2A;">Налични приложения</p>
+        <h2>Вече работи</h2>
+      </div>
+
+      {liveApps.map(app => (
+        <article
+          style="display: grid; grid-template-columns: 1fr; gap: 2rem; padding-bottom: 3rem;"
+          class="usecase-grid"
+          aria-labelledby={`app-title-${app.id}`}
+        >
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.875rem; margin-bottom: 1.5rem;">
+              <span class="label-mono" style="color: var(--color-accent);">{app.id}</span>
+              <span style="font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; background: var(--color-accent-tint); color: var(--color-accent); border-radius: 100px;">{app.tag}</span>
+              <span style="font-size: 0.6875rem; font-family: var(--font-family-mono); letter-spacing: 0.08em; padding: 0.2rem 0.625rem; border-radius: 100px; background: #EBF5EB; color: #2A6E2A;">{app.status}</span>
+            </div>
+            <h2 id={`app-title-${app.id}`} style="font-size: clamp(1.5rem, 3vw, 2rem);">{app.title}</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div>
+              <p class="label-mono" style="margin-bottom: 0.5rem;">Предизвикателство</p>
+              <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.72;">{app.challenge}</p>
+            </div>
+            <div style="width: 2rem; height: 1px; background: var(--color-border);" aria-hidden="true"></div>
+            <div>
+              <p class="label-mono" style="margin-bottom: 0.5rem;">Решение</p>
+              <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.72;">{app.solution}</p>
+            </div>
+            <div style="background: var(--color-accent-tint); border-left: 2px solid var(--color-accent); padding: 1rem 1.25rem; border-radius: 0 4px 4px 0;">
+              <p class="label-mono" style="margin-bottom: 0.375rem; color: var(--color-accent);">Резултат</p>
+              <p style="font-size: 0.875rem; color: var(--color-text); line-height: 1.65;">{app.outcome}</p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              {app.tags.map(tag => (
+                <span style="font-size: 0.75rem; padding: 0.2rem 0.625rem; border: 1px solid var(--color-border); border-radius: 100px; color: var(--color-subtle);">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Upcoming apps -->
+  <section class="section" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="margin-bottom: 3rem; max-width: 600px;">
+        <p class="eyebrow" style="margin-bottom: 0.875rem;">В разработка</p>
+        <h2>Предстоящи приложения</h2>
+        <p style="margin-top: 1rem; font-size: 1rem; color: var(--color-muted); line-height: 1.65; max-width: 50ch;">
+          Следващите приложения се изграждат върху същата платформа-основа. Когато бъдат пуснати, вашият екип ги използва без допълнителен онбординг.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr; gap: 1.25rem;" class="upcoming-grid">
+        {upcomingApps.map(app => (
+          <article class="card" style="position: relative;" aria-labelledby={`upcoming-${app.id}`}>
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+              <span class="label-mono" style="color: var(--color-accent);">{app.id}</span>
+              <span style="font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; background: var(--color-accent-tint); color: var(--color-accent); border-radius: 100px;">{app.tag}</span>
+              <span style="font-size: 0.6875rem; font-family: var(--font-family-mono); letter-spacing: 0.08em; padding: 0.2rem 0.625rem; border-radius: 100px; background: var(--color-bg); color: var(--color-muted); border: 1px solid var(--color-border);">{app.status}</span>
+            </div>
+            <h3 id={`upcoming-${app.id}`} style="margin-bottom: 0.625rem;">{app.title}</h3>
+            <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.65; margin-bottom: 1.25rem;">{app.body}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              {app.tags.map(tag => (
+                <span style="font-size: 0.75rem; padding: 0.2rem 0.625rem; border: 1px solid var(--color-border); border-radius: 100px; color: var(--color-subtle);">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    headline="Имате конкретна нужда, която не виждате тук?"
+    body="Разговаряме с клиенти за бъдещите приложения. Вашият случай може да определи следващото."
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Свържи се с нас' }}
+    ctaSecondary={{ href: `${base}resheniya`, label: 'Разгледай платформата' }}
+  />
+</BaseLayout>
+
+<style>
+  @media (min-width: 768px) {
+    .usecase-grid    { grid-template-columns: 1fr 2fr !important; gap: 4rem !important; }
+    .upcoming-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+</style>

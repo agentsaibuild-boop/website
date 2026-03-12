@@ -1,0 +1,140 @@
+---
+interface Props {
+  headline?: string;
+  body?: string;
+  ctaPrimary?: { href: string; label: string };
+  ctaSecondary?: { href: string; label: string };
+  dark?: boolean;
+}
+
+const base = import.meta.env.BASE_URL;
+
+const {
+  headline = 'Готови ли сте да внедрите AI в строителния си бизнес?',
+  body = 'Заявете безплатно демо и вижте как AIBUILD AGENTS може да автоматизира вашите процеси.',
+  ctaPrimary  = { href: `${base}kontakt`,    label: 'Заявка за демо' },
+  ctaSecondary = { href: `${base}resheniya`, label: 'Разгледай решенията' },
+  dark = false,
+} = Astro.props;
+
+const bg    = dark ? 'var(--color-dark)' : 'var(--color-accent)';
+const color = 'var(--color-dark-text)';
+const borderColor = dark ? '#2A2A2A' : 'transparent';
+---
+
+<section
+  style={`
+    background-color: ${bg};
+    color: ${color};
+    padding-block: 4.5rem;
+    border-top: 1px solid ${borderColor};
+    position: relative;
+    overflow: hidden;
+  `}
+  aria-label="Призив за действие"
+>
+  <!-- Geometric accent -->
+  <div aria-hidden="true" style="
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255,255,255,0.04), transparent);
+    pointer-events: none;
+  "></div>
+
+  <div class="container" style="position: relative; z-index: 1;">
+    <div data-reveal style="
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    ">
+
+      <div style="max-width: 560px;">
+        <h2 style="
+          color: ${color};
+          font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+          margin-bottom: 0.875rem;
+        ">
+          {headline}
+        </h2>
+        <p style="font-size: 1.0625rem; opacity: 0.8; line-height: 1.6; max-width: 50ch;">
+          {body}
+        </p>
+      </div>
+
+      <div class="cta-buttons" style="display: flex; flex-wrap: wrap; gap: 0.875rem;">
+        <a
+          href={ctaPrimary.href}
+          style="
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #fff;
+            color: var(--color-accent);
+            padding: 0.8125rem 1.75rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            letter-spacing: -0.01em;
+            transition: opacity 0.15s ease, transform 0.1s ease;
+            white-space: nowrap;
+          "
+          class="cta-btn-primary"
+        >
+          {ctaPrimary.label}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a
+          href={ctaSecondary.href}
+          style="
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8125rem 1.75rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            font-size: 0.9375rem;
+            letter-spacing: -0.01em;
+            transition: border-color 0.15s ease, color 0.15s ease;
+            white-space: nowrap;
+          "
+          class="cta-btn-secondary"
+        >
+          {ctaSecondary.label}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 639px) {
+    .cta-buttons {
+      width: 100%;
+    }
+    .cta-btn-primary,
+    .cta-btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .cta-btn-primary:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  .cta-btn-secondary:hover {
+    border-color: rgba(255,255,255,0.6) !important;
+    color: #fff !important;
+  }
+</style>

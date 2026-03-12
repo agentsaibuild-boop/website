@@ -1,0 +1,181 @@
+---
+interface Metric {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  metrics: Metric[];
+  note?: string;
+}
+
+const {
+  eyebrow = 'Резултати',
+  headline,
+  metrics,
+  note = '* Числата са примерни и отразяват типични резултати от пилотни внедрявания.',
+} = Astro.props;
+
+// Parse "до 80%" → { prefix:"до ", num:80, suffix:"%" }
+function parseMetric(value: string) {
+  const match = value.match(/^(.*?)(\d+(?:\.\d+)?)(.*?)$/);
+  if (!match) return { prefix: value, num: null, suffix: '' };
+  return { prefix: match[1], num: parseFloat(match[2]), suffix: match[3] };
+}
+
+const parsed = metrics.map(m => ({ ...m, ...parseMetric(m.value) }));
+---
+
+<section
+  class="section-sm"
+  style="
+    background-color: var(--color-dark);
+    color: var(--color-dark-text);
+    border-bottom: 1px solid #2A2A2A;
+    position: relative;
+    overflow: hidden;
+  "
+>
+  <!-- Subtle corner accent -->
+  <div aria-hidden="true" style="
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(27,57,143,0.06), transparent);
+    pointer-events: none;
+  "></div>
+
+  <div class="container" style="position: relative; z-index: 1;">
+    <div style="margin-bottom: 2.5rem;">
+      {eyebrow && <p class="eyebrow" style="color: var(--color-accent); margin-bottom: 0.625rem;">{eyebrow}</p>}
+      {headline && <h2 style="color: var(--color-dark-text); font-size: clamp(1.375rem, 2.5vw, 2rem);">{headline}</h2>}
+    </div>
+
+    <!-- Metrics grid -->
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1px solid #2A2A2A;
+      border-radius: 6px;
+      overflow: hidden;
+    " class="metrics-grid" role="list">
+      {parsed.map((m, i) => (
+        <div
+          role="listitem"
+          data-reveal
+          data-delay={String(i + 1)}
+          style={`
+            padding: 1.75rem 2rem;
+            border-bottom: ${i < parsed.length - 1 ? '1px solid #2A2A2A' : 'none'};
+          `}
+          class="metric-item"
+        >
+          <p style="
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: var(--color-dark-text);
+            margin-bottom: 0.5rem;
+          " aria-label={`${m.value} – ${m.label}`}>
+            {m.prefix && <span class="metric-prefix">{m.prefix}</span>}
+            {m.num !== null
+              ? <span
+                  class="metric-num"
+                  data-count={String(m.num)}
+                  data-suffix={m.suffix}
+                >0</span>
+              : <span>{m.value}</span>
+            }
+            {m.num !== null && <span class="metric-suffix">{m.suffix}</span>}
+            <span style="color: var(--color-accent); font-size: 0.6em;">*</span>
+          </p>
+          <p class="label-mono" style="color: var(--color-dark-muted);">{m.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <p style="
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: var(--color-dark-muted);
+      font-style: italic;
+    ">
+      {note}
+    </p>
+  </div>
+</section>
+
+<script>
+  function animateCount(el) {
+    const target = parseFloat(el.getAttribute('data-count') || '0');
+    const isInt = Number.isInteger(target);
+    const duration = 1800;
+    const startTime = performance.now();
+
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    el.textContent = '0';
+
+    function frame(now) {
+      const t = Math.min((now - startTime) / duration, 1);
+      const val = target * easeOut(t);
+      el.textContent = isInt ? String(Math.round(val)) : val.toFixed(1);
+      if (t < 1) requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  const metObs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const span = entry.target.querySelector('[data-count]');
+        if (span) animateCount(span);
+        metObs.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  document.querySelectorAll('.metric-item').forEach(el => metObs.observe(el));
+</script>
+
+<style>
+  @media (min-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .metric-item {
+      border-right: 1px solid #2A2A2A;
+    }
+
+    .metric-item:nth-child(2n) {
+      border-right: none !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .metrics-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .metric-item {
+      border-bottom: none !important;
+      border-right: 1px solid #2A2A2A;
+    }
+
+    .metric-item:last-child {
+      border-right: none !important;
+    }
+  }
+</style>

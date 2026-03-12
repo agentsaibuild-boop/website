@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTABlock from '../components/CTABlock.astro';
+const base = import.meta.env.BASE_URL;
+
+const pageSchema = {
+  '@type': 'AboutPage',
+  '@id': 'https://example.com/za-nas#page',
+  url: 'https://example.com/za-nas',
+  name: 'За нас – AIBUILD AGENTS',
+  isPartOf: { '@id': 'https://example.com/#website' },
+  about: { '@id': 'https://example.com/#org' },
+  inLanguage: 'bg-BG',
+};
+
+const values = [
+  {
+    title: 'Конкретност пред генерализъм',
+    body: 'Строителният сектор има специфична терминология, нормативна рамка и работни процеси. Всяко приложение е проектирано за тях — не като универсален инструмент.',
+  },
+  {
+    title: 'Проследимост като стандарт',
+    body: 'Всяко твърдение в платформата е свързано с изходен документ. Не приемаме AI изход без одитна следа.',
+  },
+  {
+    title: 'Инженерите са в контрол',
+    body: 'AI ускорява и структурира — специалистите одобряват и отговарят. Проектираме инструменти, не замени на експертизата.',
+  },
+  {
+    title: 'Сигурност на данните',
+    body: 'Проектната документация е чувствителна информация. Изграждаме с изолация на данните и минимален достъп като базово изискване.',
+  },
+];
+---
+
+<BaseLayout
+  title="За нас – AIBUILD AGENTS | AI за строителния бизнес"
+  description="Екипът зад AIBUILD AGENTS — мисия, ценности и подход при изграждане на AI екосистема за строителни дружества и инженерни консултанти."
+  schema={pageSchema}
+>
+  <section style="padding-block: 5.5rem 4rem; border-bottom: 1px solid var(--color-border);" class="about-hero">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: end;" class="about-hero-grid">
+        <div>
+          <p class="eyebrow" style="margin-bottom: 1.25rem;">За нас</p>
+          <h1>Правим AI полезен<br>за строителния бизнес</h1>
+        </div>
+        <div>
+          <p style="font-size: 1.0625rem; color: var(--color-muted); line-height: 1.72; max-width: 50ch;">
+            AIBUILD AGENTS не е универсален AI инструмент. Фокусираме се изцяло върху строителния сектор — разбираме спецификата на процесите, документацията и нормативната рамка. Изграждаме цялостна екосистема от AI приложения, които решават реални проблеми в строителния бизнес.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start;" class="mission-grid">
+        <div>
+          <p class="eyebrow" style="margin-bottom: 0.875rem;">Мисия</p>
+          <h2>Защо се занимаваме с това</h2>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <p style="font-size: 1.0625rem; line-height: 1.75; color: var(--color-muted); max-width: 64ch;">
+            Строителните проекти генерират огромен обем техническа документация — проекти, спецификации, количествени сметки, нормативни изисквания, протоколи. Значителна инженерна експертиза се изхарчва за четене, сортиране и преформулиране на информация — вместо за решаване на реални технически проблеми.
+          </p>
+          <p style="font-size: 1.0625rem; line-height: 1.75; color: var(--color-muted); max-width: 64ch;">
+            Започнахме с конкретния проблем с техническите предложения, защото там болката е измерима — седмици ръчна работа за един документ. Но видяхме, че проблемът е по-широк: целият жизнен цикъл на строителния проект е пренаситен с административна работа, която AI може да поеме.
+          </p>
+          <p style="font-size: 1.0625rem; line-height: 1.75; color: var(--color-muted); max-width: 64ch;">
+            Мисията ни е ясна: да върнем инженерното мислене там, където е ценно — в техническото решение.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="margin-bottom: 3rem; max-width: 520px;">
+        <p class="eyebrow" style="margin-bottom: 0.875rem;">Принципи</p>
+        <h2>Как подхождаме към изграждането на продукта</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;" class="values-grid">
+        {values.map((v, i) => (
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface);">
+            <span class="label-mono" style="color: var(--color-accent); padding-top: 0.25rem;">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">{v.title}</h3>
+              <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.7;">{v.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;">
+        <div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Искате да разберете повече?</h3>
+          <p style="font-size: 0.9375rem; color: var(--color-muted);">Свържете се с нас или заявете демо с ваша реална документация.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.875rem;">
+          <a href={`${base}kontakt`} class="btn-primary">Свържи се с нас</a>
+          <a href={`${base}resheniya`} class="btn-ghost">Разгледай решенията</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock dark={true} />
+</BaseLayout>
+
+<style>
+  @media (min-width: 768px) {
+    .about-hero { padding-block: 7.5rem 5.5rem !important; }
+    .about-hero-grid { grid-template-columns: 1fr 1fr !important; }
+    .mission-grid { grid-template-columns: 1fr 2fr !important; gap: 5rem !important; }
+    .values-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+</style>
