@@ -7,6 +7,8 @@ import ProofMetrics from '../components/ProofMetrics.astro';
 import FAQ from '../components/FAQ.astro';
 import CTABlock from '../components/CTABlock.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const pageSchema = {
   '@type': 'WebPage',
   '@id': 'https://example.com/#webpage',
@@ -24,25 +26,25 @@ const features = [
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4h12v2H4V4zm0 5h12v2H4V9zm0 5h8v2H4v-2z" fill="currentColor"/></svg>`,
     title: 'Четене на документация',
     body: 'AI анализира стотици PDF страници за минути — технически спецификации, количествени сметки, нормативни изисквания.',
-    link: { href: '/prilozheniya', label: 'Вижте приложенията' },
+    link: { href: `${base}prilozheniya`, label: 'Вижте приложенията' },
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 10a7 7 0 1014 0A7 7 0 003 10z" stroke="currentColor" stroke-width="1.5"/></svg>`,
     title: 'Автоматично съответствие',
     body: 'Проверка спрямо нормативни изисквания, стандарти и условия — без ръчна работа, с пълна проследимост.',
-    link: { href: '/resheniya', label: 'Как работи' },
+    link: { href: `${base}resheniya`, label: 'Как работи' },
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" stroke="currentColor" stroke-width="1.5"/><path d="M8 7h4M8 11h4M8 15h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
     title: 'Генериране на предложения',
     body: 'Структурирани технически предложения с обосновки и референции — готови за финализиране от вашия екип.',
-    link: { href: '/prilozheniya', label: 'Use cases' },
+    link: { href: `${base}prilozheniya`, label: 'Use cases' },
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/></svg>`,
     title: 'Растяща екосистема',
     body: 'Техническите предложения са първото приложение. Следват: анализ на КСС, управление на документация, контрол на изпълнение и още.',
-    link: { href: '/prilozheniya', label: 'Всички приложения' },
+    link: { href: `${base}prilozheniya`, label: 'Всички приложения' },
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h10M3 15h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="14" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M16 13v1.5l1 1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>`,
@@ -53,7 +55,7 @@ const features = [
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 6v8l8 4 8-4V6l-8-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 6l8 4m0 0l8-4m-8 4v8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
     title: 'Интеграция с вашия процес',
     body: 'Платформата се адаптира към съществуващия ви работен процес. API достъп и export в стандартни формати.',
-    link: { href: '/resheniya', label: 'Технически детайли' },
+    link: { href: `${base}resheniya`, label: 'Технически детайли' },
   },
 ];
 
@@ -131,8 +133,8 @@ const faqItems = [
     eyebrow="AI · Строителство · Инженеринг"
     headline="AI, който работи за вашия строителен бизнес"
     subheadline="AIBUILD AGENTS е платформа от AI приложения за строителни дружества и инженерни консултанти. Автоматизира рутинните процеси — от технически предложения до управление на документация."
-    ctaPrimary={{ href: '/kontakt', label: 'Заявка за демо' }}
-    ctaSecondary={{ href: '/resheniya', label: 'Разгледай решенията' }}
+    ctaPrimary={{ href: `${base}kontakt`, label: 'Заявка за демо' }}
+    ctaSecondary={{ href: `${base}resheniya`, label: 'Разгледай решенията' }}
   />
 
   <FeatureGrid
