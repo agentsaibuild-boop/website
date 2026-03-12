@@ -304,9 +304,18 @@ const {
     border-radius: 100px;
   }
 
-  /* Show illustration only on wide screens */
   .hero-visual {
     display: none;
+  }
+
+  @media (min-width: 640px) {
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 480px;
+      margin-inline: auto;
+    }
   }
 
   @media (min-width: 768px) {
@@ -323,9 +332,8 @@ const {
       max-width: none;
     }
     .hero-visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      max-width: none;
+      margin-inline: 0;
     }
   }
 </style>

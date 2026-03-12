@@ -66,7 +66,7 @@ const borderColor = dark ? '#2A2A2A' : 'transparent';
         </p>
       </div>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 0.875rem; flex-shrink: 0;">
+      <div class="cta-buttons" style="display: flex; flex-wrap: wrap; gap: 0.875rem;">
         <a
           href={ctaPrimary.href}
           style="
@@ -117,6 +117,17 @@ const borderColor = dark ? '#2A2A2A' : 'transparent';
 </section>
 
 <style>
+  @media (max-width: 639px) {
+    .cta-buttons {
+      width: 100%;
+    }
+    .cta-btn-primary,
+    .cta-btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
   .cta-btn-primary:hover {
     opacity: 0.92;
     transform: translateY(-1px);
