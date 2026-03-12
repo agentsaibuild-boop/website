@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://agentsaibuild-boop.github.io',
-  base: '/website',
+  base: '/website/',
   integrations: [
     sitemap({
       changefreq: 'weekly',
