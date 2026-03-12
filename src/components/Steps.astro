@@ -1,0 +1,105 @@
+---
+interface Step {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  headline: string;
+  steps: Step[];
+}
+
+const { eyebrow, headline, steps } = Astro.props;
+---
+
+<section class="section" style="border-bottom: 1px solid var(--color-border);">
+  <div class="container">
+
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: start;
+    " class="steps-wrapper">
+
+      <!-- Left: header -->
+      <div class="steps-header">
+        {eyebrow && <p class="eyebrow" style="margin-bottom: 0.875rem;">{eyebrow}</p>}
+        <h2>{headline}</h2>
+        <div style="
+          width: 3rem;
+          height: 1.5px;
+          background-color: var(--color-accent);
+          margin-top: 1.5rem;
+        " aria-hidden="true"></div>
+      </div>
+
+      <!-- Right: steps -->
+      <ol style="display: flex; flex-direction: column; gap: 0; list-style: none;" role="list">
+        {steps.map((step, i) => (
+          <li style="
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0 1.5rem;
+            position: relative;
+          ">
+            <!-- Connector line -->
+            {i < steps.length - 1 && (
+              <div aria-hidden="true" style="
+                position: absolute;
+                left: 1.125rem;
+                top: 2.75rem;
+                bottom: 0;
+                width: 1px;
+                background: var(--color-border);
+              "></div>
+            )}
+
+            <!-- Number circle -->
+            <div style="
+              width: 2.25rem;
+              height: 2.25rem;
+              border-radius: 50%;
+              border: 1.5px solid var(--color-border);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              background: var(--color-surface);
+              position: relative;
+              z-index: 1;
+            " aria-hidden="true">
+              <span class="label-mono" style="color: var(--color-accent); font-size: 0.625rem;">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div style="padding-bottom: {i < steps.length - 1 ? '2rem' : '0'};">
+              <h3 style="margin-bottom: 0.5rem; font-size: 1rem; font-weight: 600;">{step.title}</h3>
+              <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.65; max-width: 50ch;">
+                {step.body}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .steps-wrapper {
+      grid-template-columns: 1fr 2fr !important;
+      gap: 5rem !important;
+    }
+
+    .steps-header {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+</style>

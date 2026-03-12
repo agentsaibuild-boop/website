@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="4" fill="#0C0C0C"/>
+
+  <!-- L-bracket / structural section mark – engineering aesthetic -->
+  <!-- Vertical bar -->
+  <rect x="7" y="7" width="2.5" height="18" fill="#F4F3F1"/>
+  <!-- Horizontal bar -->
+  <rect x="7" y="22.5" width="13" height="2.5" fill="#F4F3F1"/>
+
+  <!-- Accent dot – precision mark -->
+  <rect x="16" y="10" width="3.5" height="3.5" fill="#1B398F"/>
+
+  <!-- Fine horizontal rule – Swiss detail -->
+  <rect x="14" y="14.5" width="9" height="1" fill="#3A3A3A"/>
+</svg>

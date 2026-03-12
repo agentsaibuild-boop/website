@@ -1,0 +1,329 @@
+---
+interface Props {
+  headline: string;
+  subheadline: string;
+  ctaPrimary?: { href: string; label: string };
+  ctaSecondary?: { href: string; label: string };
+  eyebrow?: string;
+}
+
+const {
+  headline,
+  subheadline,
+  ctaPrimary  = { href: '/kontakt',   label: 'Заявка за демо' },
+  ctaSecondary = { href: '/resheniya', label: 'Разгледай решенията' },
+  eyebrow,
+} = Astro.props;
+---
+
+<section aria-label="Начална секция" class="hero-section">
+
+  <div class="container hero-grid">
+
+    <!-- ───────── Left: text ───────── -->
+    <div class="hero-text">
+
+      {eyebrow && (
+        <p class="eyebrow" style="margin-bottom:1.25rem">{eyebrow}</p>
+      )}
+
+      <h1 style="margin-bottom:1.5rem;color:var(--color-text)">{headline}</h1>
+
+      <p class="hero-sub">{subheadline}</p>
+
+      <div class="hero-ctas">
+        <a href={ctaPrimary.href}  class="btn-primary">{ctaPrimary.label}</a>
+        <a href={ctaSecondary.href} class="btn-ghost">{ctaSecondary.label}</a>
+      </div>
+
+      <div class="trust-line">
+        <span class="trust-label">Разработено за:</span>
+        {['Строителни дружества', 'Инженерни консултанти', 'Проектанти'].map(tag => (
+          <span class="trust-tag">{tag}</span>
+        ))}
+      </div>
+
+    </div>
+
+    <!-- ───────── Right: isometric illustration ───────── -->
+    <div class="hero-visual" aria-hidden="true">
+      <!--
+        Isometric grid: origin (240, 290)
+        right vector (+ix): (+40, +20)
+        forward vector (+iy): (-40, +20)
+        up vector (+iz): (0,  -40)
+
+        Block 1 – blue tower, grid(0,0), h=4
+          top:   240,130  280,150  240,170  200,150
+          left:  240,290  240,130  200,150  200,310
+          right: 280,310  280,150  240,170  240,330
+
+        Block 2 – concrete left, grid(-1,1), h=1.5
+          top:   160,230  200,250  160,270  120,250
+          left:  160,290  160,230  120,250  120,310
+          right: 200,310  200,250  160,270  160,330
+
+        Block 3 – concrete right, grid(2,0), h=2
+          top:   320,250  360,270  320,290  280,270
+          left:  320,330  320,250  280,270  280,350
+          right: 360,350  360,270  320,290  320,370
+      -->
+      <svg
+        viewBox="0 0 480 420"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style="width:100%;height:auto;max-height:480px;display:block"
+      >
+        <defs>
+          <!-- Drop shadows -->
+          <filter id="h-fc" x="-25%" y="-25%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="10" stdDeviation="18"
+              flood-color="#111111" flood-opacity="0.10"/>
+          </filter>
+          <filter id="h-fp" x="-35%" y="-35%" width="170%" height="170%">
+            <feDropShadow dx="0" dy="4" stdDeviation="8"
+              flood-color="#111111" flood-opacity="0.08"/>
+          </filter>
+
+          <!-- Blue tower gradients -->
+          <linearGradient id="h-bt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2B52C2"/>
+            <stop offset="100%" stop-color="#1B398F"/>
+          </linearGradient>
+          <linearGradient id="h-bl" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#0E2068"/>
+            <stop offset="100%" stop-color="#091448"/>
+          </linearGradient>
+          <linearGradient id="h-br" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#163280"/>
+            <stop offset="100%" stop-color="#0E2068"/>
+          </linearGradient>
+
+          <!-- Concrete block gradients -->
+          <linearGradient id="h-ct" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ECEAE4"/>
+            <stop offset="100%" stop-color="#D0CCC4"/>
+          </linearGradient>
+          <linearGradient id="h-cl" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#B4AFA6"/>
+            <stop offset="100%" stop-color="#A6A09A"/>
+          </linearGradient>
+          <linearGradient id="h-cr" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C4BEB6"/>
+            <stop offset="100%" stop-color="#B4AFA6"/>
+          </linearGradient>
+        </defs>
+
+        <!-- ─── Background rings ─── -->
+        <circle cx="240" cy="220" r="198" stroke="#1B398F" stroke-width="0.75" opacity="0.07"/>
+        <circle cx="240" cy="220" r="245" stroke="#1B398F" stroke-width="0.5"  opacity="0.04"/>
+
+        <!-- ─── Dashed connection lines (tower top → floating cards) ─── -->
+        <line x1="240" y1="130" x2="95"  y2="62"  stroke="#1B398F" stroke-width="1" stroke-dasharray="3 4" opacity="0.22"/>
+        <line x1="240" y1="130" x2="390" y2="52"  stroke="#1B398F" stroke-width="1" stroke-dasharray="3 4" opacity="0.22"/>
+        <line x1="240" y1="130" x2="240" y2="86"  stroke="#1B398F" stroke-width="1" stroke-dasharray="3 4" opacity="0.18"/>
+
+        <!-- Node dots -->
+        <circle cx="95"  cy="62" r="4" fill="#1B398F" opacity="0.30"/>
+        <circle cx="390" cy="52" r="4" fill="#1B398F" opacity="0.30"/>
+
+        <!-- ─── ISOMETRIC BLOCKS (draw order: 3, 2, 1) ─── -->
+
+        <!-- Block 3: concrete right, grid(2,0), h=2 -->
+        <polygon points="320,330 320,250 280,270 280,350" fill="url(#h-cl)"/>
+        <polygon points="360,350 360,270 320,290 320,370" fill="url(#h-cr)"/>
+        <polygon points="320,250 360,270 320,290 280,270" fill="url(#h-ct)"/>
+
+        <!-- Block 2: concrete left, grid(-1,1), h=1.5 -->
+        <polygon points="160,290 160,230 120,250 120,310" fill="url(#h-cl)"/>
+        <polygon points="200,310 200,250 160,270 160,330" fill="url(#h-cr)"/>
+        <polygon points="160,230 200,250 160,270 120,250" fill="url(#h-ct)"/>
+
+        <!-- Block 1: blue tower, grid(0,0), h=4 -->
+        <!-- Left face -->
+        <polygon points="240,290 240,130 200,150 200,310" fill="url(#h-bl)"/>
+        <!-- Floor lines on left face (z=1,2,3) -->
+        <line x1="240" y1="250" x2="200" y2="270" stroke="rgba(255,255,255,0.07)" stroke-width="0.75"/>
+        <line x1="240" y1="210" x2="200" y2="230" stroke="rgba(255,255,255,0.07)" stroke-width="0.75"/>
+        <line x1="240" y1="170" x2="200" y2="190" stroke="rgba(255,255,255,0.07)" stroke-width="0.75"/>
+        <!-- Right face -->
+        <polygon points="280,310 280,150 240,170 240,330" fill="url(#h-br)"/>
+        <!-- Floor lines on right face -->
+        <line x1="280" y1="270" x2="240" y2="290" stroke="rgba(255,255,255,0.05)" stroke-width="0.75"/>
+        <line x1="280" y1="230" x2="240" y2="250" stroke="rgba(255,255,255,0.05)" stroke-width="0.75"/>
+        <line x1="280" y1="190" x2="240" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="0.75"/>
+        <!-- Top face -->
+        <polygon points="240,130 280,150 240,170 200,150" fill="url(#h-bt)"/>
+
+        <!-- ─── Ground suggestion lines ─── -->
+        <line x1="120" y1="310" x2="200" y2="310" stroke="#DEDAD5" stroke-width="0.75" opacity="0.55"/>
+        <line x1="200" y1="310" x2="240" y2="330" stroke="#DEDAD5" stroke-width="0.75" opacity="0.45"/>
+        <line x1="240" y1="330" x2="280" y2="350" stroke="#DEDAD5" stroke-width="0.75" opacity="0.40"/>
+
+        <!-- Tower-top glow -->
+        <circle cx="240" cy="130" r="10" fill="#1B398F" opacity="0.12"/>
+        <circle cx="240" cy="130" r="4"  fill="#5882E8" opacity="0.75"/>
+
+        <!-- ─── FLOATING CARDS ─── -->
+
+        <!-- Card A: Document card (upper-left) -->
+        <g filter="url(#h-fc)">
+          <rect x="16" y="16" width="154" height="106" rx="10" fill="white"/>
+          <!-- Header bar -->
+          <rect x="16" y="16" width="154" height="30" rx="10" fill="#1B398F"/>
+          <rect x="16" y="36" width="154" height="10" rx="0" fill="#1B398F"/>
+          <!-- Header label -->
+          <rect x="32" y="27" width="72" height="6" rx="3" fill="rgba(255,255,255,0.42)"/>
+          <!-- Window dots -->
+          <circle cx="149" cy="30" r="4" fill="rgba(255,255,255,0.18)"/>
+          <circle cx="159" cy="30" r="4" fill="rgba(255,255,255,0.18)"/>
+          <!-- Content lines -->
+          <rect x="32" y="60" width="120" height="4.5" rx="2.25" fill="#DEDAD5"/>
+          <rect x="32" y="70" width="96"  height="4.5" rx="2.25" fill="#DEDAD5"/>
+          <rect x="32" y="80" width="110" height="4.5" rx="2.25" fill="#DEDAD5"/>
+          <!-- Status badge -->
+          <rect x="32" y="96" width="64" height="18" rx="9"
+            fill="rgba(34,197,94,0.10)"/>
+          <circle cx="44" cy="105" r="4.5" fill="rgba(34,197,94,0.65)"/>
+          <path d="M41.5 105 l2 2 l3.5-3.5"
+            stroke="white" stroke-width="1.25" stroke-linecap="round"
+            stroke-linejoin="round" fill="none"/>
+          <rect x="52" y="102" width="36" height="6" rx="3"
+            fill="rgba(34,197,94,0.38)"/>
+        </g>
+
+        <!-- Card B: AI processing pill (center, above tower) -->
+        <g filter="url(#h-fp)">
+          <rect x="172" y="64" width="136" height="44" rx="22" fill="white"/>
+          <!-- Spinner ring + arc -->
+          <circle cx="196" cy="86" r="10" stroke="#DEDAD5" stroke-width="2"/>
+          <path d="M196 76 A10 10 0 0 1 206 86"
+            stroke="#1B398F" stroke-width="2" stroke-linecap="round"/>
+          <!-- Label lines -->
+          <rect x="214" y="80" width="72" height="5"  rx="2.5" fill="#1B398F" opacity="0.55"/>
+          <rect x="214" y="90" width="52" height="4"  rx="2"   fill="#DEDAD5"/>
+        </g>
+
+        <!-- Card C: Metrics card (upper-right) -->
+        <g filter="url(#h-fc)">
+          <rect x="316" y="16" width="148" height="102" rx="10" fill="white"/>
+          <!-- Section label -->
+          <rect x="332" y="30" width="66" height="5" rx="2.5" fill="#DEDAD5"/>
+          <!-- Big value block -->
+          <rect x="332" y="42" width="52" height="18" rx="5" fill="#1B398F" opacity="0.82"/>
+          <!-- Sub lines -->
+          <rect x="332" y="68" width="106" height="4.5" rx="2.25" fill="#DEDAD5"/>
+          <rect x="332" y="78" width="80"  height="4"   rx="2"    fill="#DEDAD5"/>
+          <!-- Mini bar chart -->
+          <rect x="332" y="98" width="8" height="12" rx="2" fill="#DEDAD5"/>
+          <rect x="344" y="93" width="8" height="17" rx="2" fill="#1B398F" opacity="0.22"/>
+          <rect x="356" y="90" width="8" height="20" rx="2" fill="#1B398F" opacity="0.50"/>
+          <rect x="368" y="87" width="8" height="23" rx="2" fill="#1B398F" opacity="0.78"/>
+          <rect x="380" y="91" width="8" height="19" rx="2" fill="#1B398F" opacity="0.48"/>
+          <rect x="392" y="94" width="8" height="16" rx="2" fill="#1B398F" opacity="0.28"/>
+          <rect x="404" y="89" width="8" height="21" rx="2" fill="#1B398F" opacity="0.42"/>
+          <!-- Trend line -->
+          <polyline
+            points="332,108 348,104 364,100 380,96 396,99 412,95"
+            stroke="#1B398F" stroke-width="1.25" stroke-linecap="round"
+            stroke-linejoin="round" opacity="0.35"/>
+          <circle cx="412" cy="95" r="3" fill="#1B398F" opacity="0.5"/>
+        </g>
+
+        <!-- ─── Accent dots ─── -->
+        <circle cx="68"  cy="210" r="3" fill="#1B398F" opacity="0.13"/>
+        <circle cx="418" cy="195" r="3" fill="#1B398F" opacity="0.10"/>
+        <circle cx="448" cy="300" r="2" fill="#1B398F" opacity="0.09"/>
+        <circle cx="26"  cy="345" r="2" fill="#1B398F" opacity="0.09"/>
+        <circle cx="462" cy="100" r="2" fill="#1B398F" opacity="0.11"/>
+
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    overflow: hidden;
+    padding-block: 5rem 4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-text {
+    max-width: 720px;
+  }
+
+  .hero-sub {
+    font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+    color: var(--color-muted);
+    margin-bottom: 2.25rem;
+    max-width: 58ch;
+    line-height: 1.65;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    align-items: center;
+  }
+
+  .trust-line {
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    align-items: center;
+  }
+
+  .trust-label {
+    font-size: 0.8125rem;
+    color: var(--color-subtle);
+  }
+
+  .trust-tag {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+  }
+
+  /* Show illustration only on wide screens */
+  .hero-visual {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      padding-block: 7rem 5.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-text {
+      max-width: none;
+    }
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow utility/internal paths if added later
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://example.com/sitemap-index.xml

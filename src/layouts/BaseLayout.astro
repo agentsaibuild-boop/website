@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  schema?: object | object[];
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogImage = '/og-default.png',
+  schema,
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = 'https://example.com';
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).href;
+const finalOgTitle = ogTitle ?? title;
+const finalOgDescription = ogDescription ?? description;
+
+// Base schema – Organization + WebSite on every page
+const baseSchema = [
+  {
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#org`,
+    name: 'AIBUILD AGENTS',
+    url: siteUrl,
+    email: 'hello@example.com',
+    telephone: '+359000000000',
+    description:
+      'AI платформа за автоматизиране на технически предложения и обработка на проектна документация в строителния сектор.',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'BG',
+      addressLocality: 'София',
+    },
+    sameAs: [],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: siteUrl,
+    name: 'AIBUILD AGENTS',
+    publisher: { '@id': `${siteUrl}/#org` },
+    inLanguage: 'bg-BG',
+  },
+];
+
+const schemaArray = [
+  ...baseSchema,
+  ...(Array.isArray(schema) ? schema : schema ? [schema] : []),
+];
+
+const schemaJson = JSON.stringify({ '@context': 'https://schema.org', '@graph': schemaArray });
+---
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary Meta -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={finalOgTitle} />
+  <meta property="og:description" content={finalOgDescription} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta property="og:locale" content="bg_BG" />
+  <meta property="og:site_name" content="AIBUILD AGENTS" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={finalOgTitle} />
+  <meta name="twitter:description" content={finalOgDescription} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.svg" sizes="any" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={schemaJson} />
+</head>
+<body class="min-h-screen flex flex-col" style="background-color: var(--color-bg); color: var(--color-text);">
+  <Header />
+  <main id="main-content" class="flex-1">
+    <slot />
+  </main>
+  <Footer />
+
+  <!-- Skip to main content (accessibility) -->
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 btn-primary"
+  >
+    Към съдържанието
+  </a>
+</body>
+</html>

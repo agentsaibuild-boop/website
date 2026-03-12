@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CTABlock from '../components/CTABlock.astro';
+
+const pageSchema = {
+  '@type': 'SoftwareApplication',
+  '@id': 'https://example.com/resheniya#app',
+  name: 'AIBUILD AGENTS',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: 'https://example.com/resheniya',
+  description:
+    'AI платформа-основа за строителния бизнес с нарастваща екосистема от специализирани приложения.',
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/OnlineOnly',
+    priceCurrency: 'BGN',
+  },
+  publisher: { '@id': 'https://example.com/#org' },
+};
+
+const modules = [
+  {
+    id: '01',
+    name: 'Document Intelligence',
+    title: 'Анализ и структуриране на документи',
+    body: 'Ядрото на платформата — автоматично четене и извличане на данни от PDF, DOCX и XLSX. OCR за сканирани документи. Разпознаване на таблици, раздели и ключови параметри. Свързване на информация от множество файлове в единна структура.',
+    bullets: [
+      'PDF, DOCX, XLSX, сканирани документи',
+      'Структурирана извадка на изисквания',
+      'Кръстосана референция между документи',
+      'Поддръжка на кирилица и латиница',
+    ],
+  },
+  {
+    id: '02',
+    name: 'Compliance Engine',
+    title: 'Контрол на съответствия',
+    body: 'Систематична проверка дали изходът отговаря на всяко изискване в документацията. Маркиране на пропуски, рискови точки и условия, изискващи специфична информация.',
+    bullets: [
+      'Автоматично съпоставяне изискване — отговор',
+      'Ниво на увереност за всяко съответствие',
+      'Подчертаване на пропуски и рискове',
+      'Одитна следа по изискване',
+    ],
+  },
+  {
+    id: '03',
+    name: 'Output Builder',
+    title: 'Генериране на изходни документи',
+    body: 'Структурирани документи с референции към изходни материали. Шаблони, адаптирани към тип задача и тип процедура. Вградена функция за рецензиране и одобрение от екипа.',
+    bullets: [
+      'Персонализируеми шаблони',
+      'Вграден редактор с история',
+      'Export в DOCX и PDF',
+      'Версионност и одит лог',
+    ],
+  },
+  {
+    id: '04',
+    name: 'Team Workspace',
+    title: 'Работно пространство за екипи',
+    body: 'Ролеви достъп, разпределение на задачи и коментарен слой за вътрешен преглед. Известия при промени и дедлайни. Един проект — един изглед за целия екип.',
+    bullets: [
+      'Роли: редактор, рецензент, одобряващ',
+      'Коментари и задачи по раздел',
+      'Дедлайни и напомняния',
+      'Audit log на всяко действие',
+    ],
+  },
+];
+
+const integrations = [
+  'REST API за интеграция с ERP и ПМС системи',
+  'Export в DOCX, PDF, XLSX',
+  'Webhook нотификации',
+  'SSO / SAML (корпоративен план)',
+];
+---
+
+<BaseLayout
+  title="Решения – AIBUILD AGENTS | AI платформа за строителния бизнес"
+  description="Модулна AI платформа-основа за строителния сектор. Четири ключови модула, интегрирани в единна среда, с нарастваща екосистема от специализирани приложения."
+  schema={pageSchema}
+>
+  <Hero
+    eyebrow="Решения"
+    headline="Платформата зад AI инструментите за строителния бизнес"
+    subheadline="AIBUILD AGENTS е платформа-основа с четири ключови модула. Върху тях изграждаме нарастваща екосистема от специализирани приложения за различните нужди на строителните дружества."
+    ctaPrimary={{ href: '/kontakt', label: 'Заявка за демо' }}
+    ctaSecondary={{ href: '/prilozheniya', label: 'Вижте приложенията' }}
+  />
+
+  <!-- Modules -->
+  <section class="section" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="margin-bottom: 3.5rem; max-width: 640px;">
+        <p class="eyebrow" style="margin-bottom: 0.875rem;">Основни модули</p>
+        <h2>Четири модула, един процес</h2>
+        <p style="margin-top: 1rem; font-size: 1.0625rem; color: var(--color-muted); line-height: 1.65; max-width: 52ch;">
+          Всеки модул работи самостоятелно или в комбинация с останалите. Всяко приложение от екосистемата използва същите модули — без дублиране на данни или процеси.
+        </p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {modules.map(mod => (
+          <article
+            class="card"
+            aria-labelledby={`mod-${mod.id}`}
+          >
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start;">
+              <div>
+                <span class="label-mono" style="color: var(--color-accent); display: block; margin-bottom: 0.25rem;">
+                  {mod.id}
+                </span>
+                <span class="label-mono" style="color: var(--color-muted); font-size: 0.5625rem; white-space: nowrap;">
+                  {mod.name}
+                </span>
+              </div>
+              <div>
+                <h3 id={`mod-${mod.id}`} style="margin-bottom: 0.75rem;">{mod.title}</h3>
+                <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.7; margin-bottom: 1.25rem;">
+                  {mod.body}
+                </p>
+                <ul style="display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none;">
+                  {mod.bullets.map(b => (
+                    <li style="font-size: 0.8125rem; font-weight: 500; padding: 0.25rem 0.75rem; border: 1px solid var(--color-border); border-radius: 100px; color: var(--color-muted); background: var(--color-bg);">
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- App ecosystem teaser -->
+  <section class="section-sm" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center;" class="ecosystem-wrapper">
+        <div>
+          <p class="eyebrow" style="margin-bottom: 0.875rem;">Екосистема</p>
+          <h2 style="font-size: clamp(1.5rem, 3vw, 2rem);">Модулите са основата, приложенията са продуктът</h2>
+          <p style="margin-top: 0.875rem; font-size: 0.9375rem; color: var(--color-muted); line-height: 1.7; max-width: 52ch;">
+            Върху четирите основни модула изграждаме специализирани приложения за конкретни нужди в строителния процес. Всяко ново приложение се интегрира в същата среда — без допълнителен онбординг за екипа.
+          </p>
+          <div style="margin-top: 1.5rem;">
+            <a href="/prilozheniya" class="btn-ghost">Разгледай приложенията →</a>
+          </div>
+        </div>
+        <ul style="display: flex; flex-direction: column; gap: 0.75rem; list-style: none;">
+          {[
+            { label: 'Технически предложения', status: 'Налично' },
+            { label: 'Анализ на количествени сметки', status: 'Скоро' },
+            { label: 'Управление на проектна документация', status: 'Скоро' },
+            { label: 'Контрол на изпълнение', status: 'В разработка' },
+          ].map(app => (
+            <li style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.875rem 1rem; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-bg);">
+              <span style="font-size: 0.9375rem; font-weight: 500; color: var(--color-text);">{app.label}</span>
+              <span style={`font-size: 0.6875rem; font-family: var(--font-family-mono); letter-spacing: 0.08em; padding: 0.2rem 0.625rem; border-radius: 100px; white-space: nowrap; ${app.status === 'Налично' ? 'background: #EBF5EB; color: #2A6E2A;' : 'background: var(--color-accent-tint); color: var(--color-accent);'}`}>
+                {app.status}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations -->
+  <section class="section-sm" style="border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+      <div style="max-width: 600px;">
+        <p class="eyebrow" style="margin-bottom: 0.875rem;">Интеграции</p>
+        <h2 style="font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 1.5rem;">Интегрира се с вашите системи</h2>
+        <ul style="display: flex; flex-direction: column; gap: 0.75rem; list-style: none;">
+          {integrations.map(item => (
+            <li style="display: flex; align-items: start; gap: 0.75rem; font-size: 0.9375rem; color: var(--color-muted); padding: 0.875rem 1rem; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-surface);">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="color: var(--color-accent); flex-shrink: 0; margin-top: 2px;" aria-hidden="true">
+                <path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock />
+</BaseLayout>
+
+<style>
+  @media (min-width: 768px) {
+    .ecosystem-wrapper {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 5rem !important;
+    }
+  }
+</style>

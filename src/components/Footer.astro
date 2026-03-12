@@ -1,0 +1,130 @@
+---
+const year = new Date().getFullYear();
+
+const links = {
+  platform: [
+    { href: '/resheniya',    label: 'Решения' },
+    { href: '/prilozheniya', label: 'Приложения' },
+    { href: '/kontakt',      label: 'Заявка за демо' },
+  ],
+  company: [
+    { href: '/za-nas',                     label: 'За нас' },
+    { href: '/kontakt',                    label: 'Контакт' },
+    { href: '/politika-za-poveritelnost',  label: 'Поверителност' },
+  ],
+};
+---
+
+<footer
+  role="contentinfo"
+  style="
+    background-color: var(--color-dark);
+    color: var(--color-dark-text);
+    padding-block: 3.5rem 2rem;
+    border-top: 1px solid #2A2A2A;
+  "
+>
+  <div class="container">
+
+    <!-- Top grid -->
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid #2A2A2A;
+    " class="footer-grid">
+
+      <!-- Brand -->
+      <div>
+        <a href="/" style="display: inline-block; margin-bottom: 0.75rem;">
+          <span style="font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.02em; color: var(--color-dark-text);">
+            AIBUILD AGENTS
+          </span>
+        </a>
+        <p style="font-size: 0.875rem; color: var(--color-dark-muted); line-height: 1.65; max-width: 30ch;">
+          AI платформа за автоматизиране на технически предложения и документация в строителния сектор.
+        </p>
+        <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.375rem;">
+          <a
+            href="mailto:hello@example.com"
+            style="font-size: 0.8125rem; color: var(--color-dark-muted); font-family: var(--font-family-mono);"
+            class="footer-link-subtle"
+          >
+            hello@example.com
+          </a>
+          <a
+            href="tel:+359000000000"
+            style="font-size: 0.8125rem; color: var(--color-dark-muted); font-family: var(--font-family-mono);"
+            class="footer-link-subtle"
+          >
+            +359 000 000 000
+          </a>
+        </div>
+      </div>
+
+      <!-- Platform links -->
+      <div>
+        <p class="label-mono" style="color: var(--color-dark-muted); margin-bottom: 1rem;">Платформа</p>
+        <ul style="display: flex; flex-direction: column; gap: 0.5rem; list-style: none;">
+          {links.platform.map(l => (
+            <li>
+              <a href={l.href} class="footer-link" style="font-size: 0.875rem; color: var(--color-dark-text);">{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Company links -->
+      <div>
+        <p class="label-mono" style="color: var(--color-dark-muted); margin-bottom: 1rem;">Компания</p>
+        <ul style="display: flex; flex-direction: column; gap: 0.5rem; list-style: none;">
+          {links.company.map(l => (
+            <li>
+              <a href={l.href} class="footer-link" style="font-size: 0.875rem; color: var(--color-dark-text);">{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-top: 1.75rem;
+    ">
+      <p style="font-size: 0.8125rem; color: var(--color-dark-muted);">
+        &copy; {year} AIBUILD AGENTS. Всички права запазени.
+      </p>
+      <p class="label-mono" style="color: #3A3A3A; font-size: 0.625rem;">
+        BG · V1.0
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr !important;
+    }
+  }
+
+  .footer-link {
+    opacity: 0.8;
+    transition: opacity 0.15s ease;
+  }
+
+  .footer-link:hover {
+    opacity: 1;
+  }
+
+  .footer-link-subtle:hover {
+    color: var(--color-dark-text) !important;
+  }
+</style>
