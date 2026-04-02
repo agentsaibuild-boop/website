@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function TwoFactorVerifyPage() {
   const router = useRouter();
+  const { update } = useSession();
   const [code, setCode] = useState("");
   const [isBackup, setIsBackup] = useState(false);
   const [error, setError] = useState("");
@@ -29,6 +31,8 @@ export default function TwoFactorVerifyPage() {
       return;
     }
 
+    // Update JWT to mark 2FA as verified — clears the middleware gate
+    await update({ twoFactorVerified: true });
     router.push("/dashboard");
   }
 

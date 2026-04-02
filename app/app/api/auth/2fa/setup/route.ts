@@ -15,18 +15,19 @@ export async function GET() {
     return NextResponse.json({ error: "Неоторизиран достъп" }, { status: 401 });
   }
 
-  const { secret, qrCodeUrl, otpauthUrl } = generateTotpSecret(
-    session.user.email
-  );
+  const { secret, qrCodeUrl } = generateTotpSecret(session.user.email);
 
-  // Store the unconfirmed secret temporarily (encrypted)
+  // Store encrypted secret in DB (not yet enabled — awaits POST confirmation)
   const encrypted = encryptSecret(secret);
   await db.user.update({
     where: { id: session.user.id },
     data: { twoFactorSecret: encrypted },
   });
 
-  return NextResponse.json({ qrCodeUrl, otpauthUrl });
+  return NextResponse.json({
+    qrUrl: qrCodeUrl,   // expected by setup page
+    secret,             // for manual entry in authenticator app
+  });
 }
 
 // POST /api/auth/2fa/setup – confirm setup with first TOTP code
@@ -58,7 +59,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Невалиден или изтекъл код" }, { status: 400 });
   }
 
-  // Generate backup codes
   const { plain, hashed } = await generateBackupCodes();
 
   await db.user.update({
@@ -80,6 +80,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     message: "2FA е активирано успешно",
-    backupCodes: plain, // shown ONCE – user must save them
+    backupCodes: plain, // shown ONCE
   });
 }

@@ -41,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const valid = await bcrypt.compare(password, user.passwordHash);
         if (!valid) return null;
 
-        // Update last login
         await db.user.update({
           where: { id: user.id },
           data: { lastLoginAt: new Date() },
@@ -67,13 +66,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session: sessionUpdate }) {
       if (user) {
         token.id = user.id as string;
         token.role = (user as { role: string }).role;
         token.twoFactorEnabled = (user as { twoFactorEnabled: boolean }).twoFactorEnabled;
-        token.twoFactorVerified = false; // must complete 2FA step
+        token.twoFactorVerified = false;
         token.accountStatus = (user as { accountStatus: string }).accountStatus;
+      }
+      if (trigger === "update" && (sessionUpdate as { twoFactorVerified?: boolean })?.twoFactorVerified === true) {
+        token.twoFactorVerified = true;
       }
       return token;
     },
@@ -89,7 +91,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-// Augment next-auth types
 declare module "next-auth" {
   interface Session {
     user: {

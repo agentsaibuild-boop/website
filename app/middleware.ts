@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Routes that require authentication
-const protectedPaths = ["/dashboard", "/settings", "/documents", "/2fa/setup", "/pricing"];
+const protectedPaths = ["/dashboard", "/settings", "/documents", "/2fa/setup", "/applications", "/admin"];
 
 // Routes only for guests (redirect to dashboard if logged in)
 const guestPaths = ["/login", "/register"];

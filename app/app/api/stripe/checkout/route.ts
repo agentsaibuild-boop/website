@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { stripe, PLANS } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
+import { getPriceId } from "@/lib/applications";
 import { z } from "zod";
 
 const checkoutSchema = z.object({
-  plan: z.enum(["STARTER", "PRO"]),
+  priceEnvKey: z.string().min(1),
 });
 
 export async function POST(req: NextRequest) {
@@ -17,11 +18,13 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const parsed = checkoutSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Невалиден план" }, { status: 400 });
+    return NextResponse.json({ error: "Невалидна заявка" }, { status: 400 });
   }
 
-  const { plan } = parsed.data;
-  const planConfig = PLANS[plan];
+  const priceId = getPriceId(parsed.data.priceEnvKey);
+  if (!priceId) {
+    return NextResponse.json({ error: "Ценовият план не е конфигуриран." }, { status: 400 });
+  }
 
   // Get or create Stripe customer
   let stripeCustomerId: string;
@@ -45,14 +48,14 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL!;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXTAUTH_URL ?? "http://localhost:3001";
 
   const checkoutSession = await stripe.checkout.sessions.create({
     customer: stripeCustomerId,
     mode: "subscription",
-    line_items: [{ price: planConfig.priceId, quantity: 1 }],
+    line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${appUrl}/dashboard?payment=success`,
-    cancel_url: `${appUrl}/pricing?payment=canceled`,
+    cancel_url: `${appUrl}/applications?payment=canceled`,
     metadata: { userId: session.user.id },
     subscription_data: {
       metadata: { userId: session.user.id },

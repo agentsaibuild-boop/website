@@ -1,12 +1,13 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  const [user, documents] = await Promise.all([
+  const [user, documents, totalDocs] = await Promise.all([
     db.user.findUnique({
       where: { id: session.user.id },
       include: { subscription: true },
@@ -16,6 +17,7 @@ export default async function DashboardPage() {
       orderBy: { createdAt: "desc" },
       take: 5,
     }),
+    db.document.count({ where: { userId: session.user.id } }),
   ]);
 
   const isActive = user?.accountStatus === "ACTIVE";
@@ -23,28 +25,28 @@ export default async function DashboardPage() {
   return (
     <div className="page-content">
       <div className="page-header">
-        <h1>Dashboard</h1>
-        <p className="page-subtitle">Добре дошъл, {session.user.name?.split(" ")[0] ?? "потребителю"}</p>
+        <h1>Табло</h1>
+        <p className="page-subtitle">
+          Добре дошъл, {session.user.name?.split(" ")[0] ?? "потребителю"}
+        </p>
       </div>
 
-      {/* Account status banner */}
       {!isActive && (
         <div className="banner banner-warning">
           <p>
-            <strong>Акаунтът не е активиран.</strong> Абонирай се, за да получиш
-            достъп до платформата.
+            <strong>Акаунтът не е активиран.</strong> Абонирай се, за да
+            получиш достъп до платформата.
           </p>
-          <a href="/pricing" className="btn-sm">
+          <Link href="/pricing" className="btn-sm">
             Избери план →
-          </a>
+          </Link>
         </div>
       )}
 
-      {/* Stats */}
       <div className="stats-grid">
         <div className="stat-card">
           <p className="stat-label">Документи</p>
-          <p className="stat-value">{documents.length}</p>
+          <p className="stat-value">{totalDocs}</p>
         </div>
         <div className="stat-card">
           <p className="stat-label">Статус</p>
@@ -60,39 +62,43 @@ export default async function DashboardPage() {
         </div>
         <div className="stat-card">
           <p className="stat-label">План</p>
-          <p className="stat-value">
-            {user?.subscription?.plan ?? "—"}
-          </p>
+          <p className="stat-value">{user?.subscription?.plan ?? "—"}</p>
         </div>
         <div className="stat-card">
           <p className="stat-label">2FA</p>
-          <p className={`stat-value ${user?.twoFactorEnabled ? "status-active" : "status-inactive"}`}>
+          <p
+            className={`stat-value ${
+              user?.twoFactorEnabled ? "status-active" : "status-inactive"
+            }`}
+          >
             {user?.twoFactorEnabled ? "Активирано" : "Неактивирано"}
           </p>
         </div>
       </div>
 
-      {/* Recent documents */}
       <div className="section-card">
         <div className="section-card-header">
           <h2>Последни документи</h2>
-          <a href="/documents" className="btn-ghost-sm">Виж всички</a>
+          <Link href="/documents" className="btn-ghost-sm">
+            Виж всички
+          </Link>
         </div>
 
         {documents.length === 0 ? (
           <div className="empty-state">
-            <p>Нямаш качени документи все още.</p>
+            <span style={{ fontSize: "2rem", opacity: 0.3 }}>📄</span>
+            <span>Нямаш качени документи все още.</span>
             {isActive && (
-              <a href="/documents/upload" className="btn-sm">
+              <Link href="/documents" className="btn-sm">
                 Качи документ
-              </a>
+              </Link>
             )}
           </div>
         ) : (
           <div className="document-list">
             {documents.map((doc) => (
               <div key={doc.id} className="document-row">
-                <div className="doc-icon">{doc.type}</div>
+                <span className="doc-icon">{doc.type}</span>
                 <div className="doc-info">
                   <p className="doc-name">{doc.name}</p>
                   <p className="doc-meta">
@@ -100,14 +106,14 @@ export default async function DashboardPage() {
                     {new Date(doc.createdAt).toLocaleDateString("bg-BG")}
                   </p>
                 </div>
-                <span className={`doc-status status-${doc.status.toLowerCase()}`}>
+                <span className={`status-badge status-${doc.status.toLowerCase()}`}>
                   {doc.status === "COMPLETED"
-                    ? "Готово"
+                    ? "завършен"
                     : doc.status === "PROCESSING"
-                      ? "Обработва се"
+                      ? "обработва се"
                       : doc.status === "FAILED"
-                        ? "Грешка"
-                        : "Качено"}
+                        ? "грешка"
+                        : "качен"}
                 </span>
               </div>
             ))}
