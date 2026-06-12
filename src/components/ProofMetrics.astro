@@ -88,8 +88,7 @@ const parsed = metrics.map(m => ({ ...m, ...parseMetric(m.value) }));
               ? <span
                   class="metric-num"
                   data-count={String(m.num)}
-                  data-suffix={m.suffix}
-                >0</span>
+                >{String(m.num)}</span>
               : <span>{m.value}</span>
             }
             {m.num !== null && <span class="metric-suffix">{m.suffix}</span>}
@@ -134,12 +133,14 @@ const parsed = metrics.map(m => ({ ...m, ...parseMetric(m.value) }));
     requestAnimationFrame(frame);
   }
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const metObs = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const span = entry.target.querySelector('[data-count]');
-        if (span) animateCount(span);
+        if (span && !prefersReducedMotion) animateCount(span);
         metObs.unobserve(entry.target);
       });
     },

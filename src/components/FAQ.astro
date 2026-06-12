@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL;
 
 const {
   eyebrow = 'Въпроси и отговори',
-  headline = 'Честоотговаряни въпроси',
+  headline = 'Често задавани въпроси',
   items,
 } = Astro.props;
 
@@ -46,13 +46,13 @@ const faqSchema = {
         {eyebrow && <p class="eyebrow" style="margin-bottom: 0.875rem;">{eyebrow}</p>}
         <h2 style="max-width: 18ch;">{headline}</h2>
         <p style="margin-top: 1rem; font-size: 0.9375rem; color: var(--color-muted); max-width: 36ch; line-height: 1.65;">
-          Не намирате отговора? <a href={`${base}kontakt`} style="color: var(--color-accent); font-weight: 500;" class="faq-contact-link">Свържете се с нас.</a>
+          Не намирате отговора? <a href={`${base}kontakt/`} style="color: var(--color-accent); font-weight: 500;" class="faq-contact-link">Свържете се с нас.</a>
         </p>
       </div>
 
       <!-- Accordion via native <details> – zero JS needed -->
       <div>
-        <dl>
+        <div>
           {items.map((item, i) => (
             <details
               data-reveal
@@ -73,7 +73,7 @@ const faqSchema = {
                 list-style: none;
                 user-select: none;
               " class="faq-summary">
-                <dt style="
+                <span class="faq-q" style="
                   font-size: 1rem;
                   font-weight: 600;
                   letter-spacing: -0.01em;
@@ -81,7 +81,7 @@ const faqSchema = {
                   flex: 1;
                 ">
                   {item.question}
-                </dt>
+                </span>
                 <!-- Plus/minus indicator -->
                 <span class="faq-icon" aria-hidden="true" style="
                   flex-shrink: 0;
@@ -101,14 +101,14 @@ const faqSchema = {
                   </svg>
                 </span>
               </summary>
-              <dd style="padding-bottom: 1.375rem; padding-right: 2.5rem;">
+              <div class="faq-answer" style="padding-bottom: 1.375rem; padding-right: 2.5rem;">
                 <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.7;">
                   {item.answer}
                 </p>
-              </dd>
+              </div>
             </details>
           ))}
-        </dl>
+        </div>
       </div>
 
     </div>
@@ -134,7 +134,7 @@ const faqSchema = {
   .faq-item[open] .faq-icon-plus  { display: none !important; }
   .faq-item[open] .faq-icon-minus { display: flex !important; }
 
-  details[open] > dd {
+  details[open] > .faq-answer {
     animation: ddOpen 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
@@ -148,7 +148,7 @@ const faqSchema = {
   details > summary::-webkit-details-marker { display: none; }
   details > summary::marker { display: none; }
 
-  .faq-summary:hover dt {
+  .faq-summary:hover .faq-q {
     color: var(--color-accent);
   }
 

@@ -79,7 +79,7 @@ const { eyebrow, headline, steps } = Astro.props;
             </div>
 
             <!-- Content -->
-            <div style="padding-bottom: {i < steps.length - 1 ? '2rem' : '0'};">
+            <div style={`padding-bottom: ${i < steps.length - 1 ? '2rem' : '0'};`}>
               <h3 style="margin-bottom: 0.5rem; font-size: 1rem; font-weight: 600;">{step.title}</h3>
               <p style="font-size: 0.9375rem; color: var(--color-muted); line-height: 1.65; max-width: 50ch;">
                 {step.body}

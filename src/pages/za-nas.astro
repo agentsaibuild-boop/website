@@ -5,11 +5,11 @@ const base = import.meta.env.BASE_URL;
 
 const pageSchema = {
   '@type': 'AboutPage',
-  '@id': 'https://example.com/za-nas#page',
-  url: 'https://example.com/za-nas',
+  '@id': 'https://aibuildagents.bg/za-nas/#page',
+  url: 'https://aibuildagents.bg/za-nas/',
   name: 'За нас – AIBUILD AGENTS',
-  isPartOf: { '@id': 'https://example.com/#website' },
-  about: { '@id': 'https://example.com/#org' },
+  isPartOf: { '@id': 'https://aibuildagents.bg/#website' },
+  about: { '@id': 'https://aibuildagents.bg/#org' },
   inLanguage: 'bg-BG',
 };
 
@@ -104,8 +104,8 @@ const values = [
           <p style="font-size: 0.9375rem; color: var(--color-muted);">Свържете се с нас или заявете демо с ваша реална документация.</p>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.875rem;">
-          <a href={`${base}kontakt`} class="btn-primary">Свържи се с нас</a>
-          <a href={`${base}resheniya`} class="btn-ghost">Разгледай решенията</a>
+          <a href={`${base}kontakt/`} class="btn-primary">Свържи се с нас</a>
+          <a href={`${base}resheniya/`} class="btn-ghost">Разгледай решенията</a>
         </div>
       </div>
     </div>
