@@ -1,27 +1,26 @@
 #!/bin/bash
-# Deploy script for SuperHosting
-# Usage: ./deploy.sh
-
 set -e
 
-echo "🔨 Building site..."
+echo "🔨 Строя сайта..."
 npm run build
 
 echo ""
-echo "📦 Creating deployment package..."
-cd dist
-zip -r -q ../deploy.zip .
-cd ..
+echo "📤 Качвам на SuperHosting чрез SFTP..."
 
-echo ""
-echo "✅ Deploy package ready: deploy.zip"
-echo ""
-echo "📋 NEXT STEPS:"
-echo "1. Go to SuperHosting Control Panel → File Manager"
-echo "2. Open /public_html/ folder"
-echo "3. Upload deploy.zip"
-echo "4. Right-click → Extract"
-echo "5. Delete deploy.zip"
-echo "6. Done! Visit https://aibuildagents.bg to verify"
-echo ""
-echo "🔗 SuperHosting: https://cPanel.superhosting.bg"
+# SFTP качване със SSH ключа
+sftp -i ./id_rsa -b /dev/stdin aibuilda@ftp.superhosting.bg << SFTP_COMMANDS
+cd /public_html/
+rm -r *
+put -r dist/*
+quit
+SFTP_COMMANDS
+
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "✅ УСПЕШНО!"
+    echo "🌐 Отвори: https://aibuildagents.bg"
+else
+    echo ""
+    echo "❌ Грешка при качване."
+    exit 1
+fi
