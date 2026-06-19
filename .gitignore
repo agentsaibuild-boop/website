@@ -20,3 +20,7 @@ Thumbs.db
 # Editor
 .vscode/settings.json
 *.log
+
+# Build artifact — regeneratable, do not commit
+deploy.zip
+*.zip
